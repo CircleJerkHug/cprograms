@@ -84,7 +84,7 @@ int main()
 		append(&head,a);	break;
 	}
 	printlist(head);
-	/*{
+	{
 		printf("\n");
 		printf("Enter the node value to be pushed\n");
 		scanf("%d",&num);
@@ -95,5 +95,5 @@ int main()
 		append(&head,a);
 		printlist(head);
 	}
-}*/
+}
 }
