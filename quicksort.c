@@ -55,4 +55,5 @@ int main()
 	quicksort(arr,0,n-1);
 	printf("\n");
 	printarr(arr,n);
+	printf("\n");
 }
