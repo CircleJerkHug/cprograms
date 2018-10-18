@@ -209,7 +209,7 @@ int main()
     a=(int *)malloc(n*sizeof(int));
     for(i=0;i<n;i++)
     {
-        a[i]=rand()%50;
+    	a[i]=rand()%50;
         printf("%d\t",a[i]);
         insert(&root,a[i]);
     }
