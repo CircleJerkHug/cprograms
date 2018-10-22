@@ -1,84 +1,65 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include<malloc.h>
-  
-struct Node 
-{ 
-    int key; 
-    struct Node *left, *right; 
-}; 
-  
-// A utility function to create a new BST Node 
-struct Node *newNode(int item) 
-{ 
-    struct Node *temp;
-    temp->key = item; 
-    temp->left = temp->right = NULL; 
-    return temp; 
-} 
-  
-// Stores inoder traversal of the BST 
-// in arr[] 
-void storeSorted(Node *root, int arr[], int &i) 
-{ 
-    if (root != NULL) 
-    { 
-        storeSorted(root->left, arr, i); 
-        arr[i++] = root->key; 
-        storeSorted(root->right, arr, i); 
-    } 
-} 
-  
-/* A utility function to insert a new 
-   Node with given key in BST */
-Node* insert(Node* node, int key) 
-{ 
-    /* If the tree is empty, return a new Node */
-    if (node == NULL) return newNode(key); 
-  
-    /* Otherwise, recur down the tree */
-    if (key < node->key) 
-        node->left  = insert(node->left, key); 
-    else if (key > node->key) 
-        node->right = insert(node->right, key); 
-  
-    /* return the (unchanged) Node pointer */
-    return node; 
-} 
-  
-// This function sorts arr[0..n-1] using Tree Sort 
-void treeSort(int arr[], int n) 
-{ 
-    struct Node *root = NULL; 
-  
-    // Construct the BST 
-    root = insert(root, arr[0]); 
-    for (int i=1; i<n; i++) 
-        insert(root, arr[i]); 
-  
-    // Store inoder traversal of the BST 
-    // in arr[] 
-    int i = 0; 
-    storeSorted(root, arr, i); 
-} 
-  
-// Driver Program to test above functions 
-int main() 
-{ 
-    //create input array 
-    int *arr,n,i;
-    printf("Enter the number of elements\n");
-    scanf("%d",&n);
-    arr=(int *)malloc(n*sizeof(int));
-    for(i=0;i<n;i++)
+ 
+struct btreenode											//structure for binary search tree
+{
+    struct btreenode *leftchild ;
+    int data ;
+    struct btreenode *rightchild ;
+} ;
+ 
+void insert ( struct btreenode **, int ) ;
+void inorder ( struct btreenode * ) ;
+ 
+int main( )															//main method
+{
+    struct btreenode *bt ;
+    int arr[20], arr1[20];
+    int i, num, j ;
+    bt = NULL ; 														//initialize the node
+    printf("\nEnter the number of elements in the list : ");
+    scanf("%d",&num);
+    printf("\nEnter the elements to be sorted: \n");
+    for(i=0;i < num;i++)
     {
-        arr[i]=rand()%100;
-        printf("%d\t",arr[i]);
-    } 
-  
-    treeSort(arr, n); 
-    for(i=0;i<n;i++)
-        printf("%d\t",arr[i]);
-  
-    return 0; 
-} 
+                      scanf("%d",&arr[i]);
+                      arr1[i]=arr[i];
+                      }
+    for ( i = 0 ; i < num ; i++ )
+        printf ( "%d\t", arr[i] ) ;
+ 
+    for ( j = 0 ; j < num ; j++ )
+        insert ( &bt, arr1[j] ) ;
+ 
+    printf ( "\nSorted array:\n" ) ;
+    inorder ( bt );
+}
+ 
+void insert ( struct btreenode **sr, int num1 )					//function to insert in values in the tree	
+{
+    if ( *sr == NULL )
+    {
+        *sr = malloc ( sizeof ( struct btreenode ) ) ;
+ 
+        ( *sr ) -> leftchild = NULL ;
+        ( *sr ) -> data = num1 ;
+        ( *sr ) -> rightchild = NULL ;
+    }
+    else
+    {
+        if ( num1 < ( *sr ) -> data )
+            insert ( &( ( *sr ) -> leftchild ), num1 ) ;
+        else
+            insert ( &( ( *sr ) -> rightchild ), num1 ) ;
+    }
+}
+ 
+void inorder ( struct btreenode *sr )					//function to print the inorder tansversal of the tree which shall be sorted
+{
+    if ( sr != NULL )
+    {
+        inorder ( sr -> leftchild ) ;
+        printf ( "%d\t", sr -> data ) ;
+        inorder ( sr -> rightchild ) ;
+    }
+}
